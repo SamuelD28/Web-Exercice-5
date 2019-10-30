@@ -1,0 +1,24 @@
+body, html{
+    height: 100%;
+}
+
+body{
+    margin: 0;
+}
+
+#canvas{
+    height: 100%;
+    background: black;
+    position: relative;
+}
+
+.zombie{
+    display: inline-block;
+    height: 4rem;
+    width: 4rem;
+    font-size: 4rem;
+    top: -4em;
+    left: 0;
+    background: white;
+    position: absolute;
+}

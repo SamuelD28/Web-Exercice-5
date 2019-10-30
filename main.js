@@ -1,9 +1,6 @@
 
 /**
  * Todo : 
- * -Spawn un dequoi en haut
- * -Bouge lobject vers le bas. Vitesse constante
- * -Respecter les limites de lecrans
  * -Spawn a un intervalle de temps
  * -Spawn aleatoire
  * -Systeme de score
@@ -29,3 +26,58 @@
  * -FUsée qui suit la souris
  * 
  */
+
+
+// "<div class="zombie">🧟</div>"
+
+(function(){
+    window.addEventListener("DOMContentLoaded", (event) => {
+        new Game().start();
+    });
+})();
+
+class Game{
+
+    constructor(){
+        this.canvas = $("#canvas");
+        this.canvasHeight = this.canvas.height();
+        this.canvasWidth = this.canvas.width();
+    }
+
+    start(){
+        setInterval(()=>{
+            this.spawn();
+            this.moveZombie();
+        }, 1000);
+    }
+    
+    spawn(){
+        this.canvas.append("<div class='zombie'>🧟</div>");
+        let zombie = $(".zombie");
+        let leftPositionSpawn = Math.max(Math.random() * this.canvasWidth - zombie.width(), 0);
+        zombie.css({"left" : leftPositionSpawn + "px"});
+    }
+
+    moveZombie() {
+        let zombie = $(".zombie");
+        let zombieHeight = zombie.height();
+        zombie.animate({ "top": this.canvasHeight - zombieHeight }, 2000);
+    }
+
+    stop(){
+
+
+    }
+
+    end(){
+
+
+    }
+}
+
+class Zombie{
+
+    spawn(){
+        let zombie = "<div class='zombie'>🧟</div>";
+    }
+}
