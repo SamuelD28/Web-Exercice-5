@@ -1,18 +1,18 @@
-body, html{
+body, html {
     height: 100%;
 }
 
-body{
+body {
     margin: 0;
 }
 
-#canvas{
+#canvas {
     height: 100%;
     background: black;
     position: relative;
 }
 
-.zombie{
+.enemy {
     display: inline-block;
     font-size: 4rem;
     top: -4em;
