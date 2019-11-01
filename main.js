@@ -1,6 +1,8 @@
 
 /**
- * BUG : le width() et le height() retourne zero
+ * BUG : le width() et le height() retourne zero. Il faudrait les créer et les cacher
+ * dans le html dapres moi.Les methodes retournent surment zero parce lelement est pas
+ * encore dessiner dans le DOM
  * 
  * 
  * Todo : 
