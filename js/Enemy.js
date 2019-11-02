@@ -1,10 +1,12 @@
 export default class Enemy {
 
-    constructor(tag, css){
+    constructor(tag, css, damage, points){
         this.element = $(tag)
             .css({ left: 0 + "px" })
             .addClass("enemy", css);
-        this.subscribers = [];
+        this.scoreSubscribers = [];
+        this.damage = damage;
+        this.points = points;
     }
 
     setLeftPosition(left) {
@@ -17,17 +19,17 @@ export default class Enemy {
         }, 
         2000,
         () =>{
-            this.notifySubscribers();
+            this.changeScore(this.damage);
         });
     }
 
     subscribe(cb){
-        this.subscribers.push(cb);
+        this.scoreSubscribers.push(cb);
     }
 
-    notifySubscribers(){
-        this.subscribers.forEach(cb => {
-            cb(-10);
+    changeScore(score){
+        this.scoreSubscribers.forEach(cb => {
+            cb(score);
         });
     }
 }
