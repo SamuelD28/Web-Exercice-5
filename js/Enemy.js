@@ -54,7 +54,7 @@ class Enemy {
     moveToBottom(bottom) {
         this.activateOnClick();
         this.element.animate({ 
-            "top": bottom - this.element.height() 
+            "top": bottom - this.element.outerHeight() 
         }, 
         4000,
         () =>{

@@ -86,7 +86,7 @@ class Game {
     removeFallingEnemies(){
 
         this.enemies.forEach((enemy) =>{
-            let reachedHeight = `${this.canvasHeight - enemy.element.height()}px`;
+            let reachedHeight = `${this.canvasHeight - enemy.element.outerHeight()}px`;
             if(enemy.element.css("top") !== reachedHeight){
                 enemy.remove();
             }
@@ -103,11 +103,13 @@ class Game {
         return setInterval(() => {
 
             let enemy = EnemyFactory.create();
+            this.enemies.push(enemy);
+            
+            this.instantiate(enemy);
+
             enemy.setLeftPosition(this.PickRandomEnemySpawnPoint(enemy));
             enemy.subscribe(this.setScore.bind(this));
-            this.instantiate(enemy);
             enemy.moveToBottom(this.canvasHeight);
-            this.enemies.push(enemy);
 
         }, this.spawnInterval);
     }
@@ -153,8 +155,8 @@ class Game {
      * @returns Return the random left position
      */
     PickRandomEnemySpawnPoint(enemy) {
-
-        return Math.max(this.PickRandomLeftPositionInCanvas() - enemy.element.width(), 0);
+        console.log(enemy.element.outerWidth());
+        return Math.max(this.PickRandomLeftPositionInCanvas() - enemy.element.outerWidth(), 0);
     }
 
     /**
