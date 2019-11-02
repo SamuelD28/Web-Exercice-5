@@ -8,6 +8,7 @@ export class Game {
         this.canvasWidth = this.canvas.width();
         
         // Could become a strategy pattern
+        this.enemies = [];
         this.scoreUI = $("#score");
         this.score = 0;
     }
@@ -17,19 +18,41 @@ export class Game {
     }
 
     stop(){
-        console.log("stopping");
         clearInterval(this.gameLoop);
+        this.freezeEnemies();
+        this.removeFallingEnemies();
+    }
+
+    freezeEnemies(){
+        this.enemies.forEach((enemy) =>{
+            enemy.freeze();
+        });
+    }
+
+    unfreezeEnemies(){
+        this.enemies.forEach((enemy) =>{
+            enemy.moveToBottom(this.canvasHeight);
+        });
+    }
+
+    removeFallingEnemies(){
+        this.enemies.forEach((enemy) =>{
+            let reachedHeight = `${this.canvasHeight - enemy.element.height()}px`;
+            if(enemy.element.css("top") !== reachedHeight){
+                enemy.remove();
+            }
+        });
     }
 
     createGameLoop() {
         return setInterval(() => {
-            
-            this.applyScoreStrategy();
+
             let enemy = EnemyFactory.create();
             enemy.setLeftPosition(this.PickRandomEnemySpawnPoint(enemy));
             enemy.subscribe(this.setScore.bind(this));
             this.instantiate(enemy);
             enemy.moveToBottom(this.canvasHeight);
+            this.enemies.push(enemy);
 
         }, 1000);
     }
@@ -47,6 +70,7 @@ export class Game {
     setScore(score){
         this.score = this.score + score;
         this.scoreUI.text(this.score);
+        this.applyScoreStrategy();
     }
 
     PickRandomEnemySpawnPoint(enemy) {

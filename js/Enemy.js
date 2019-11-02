@@ -23,6 +23,14 @@ export default class Enemy {
         });
     }
 
+    freeze(){
+        this.element.stop();
+    }
+
+    remove(){
+        this.element.fadeOut();
+    }
+
     subscribe(cb){
         this.scoreSubscribers.push(cb);
     }
