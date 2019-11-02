@@ -6,13 +6,15 @@ export class Game {
         this.canvas = $("#canvas");
         this.canvasHeight = this.canvas.height();
         this.canvasWidth = this.canvas.width();
-        this.score = null;
+        this.scoreUI = $("#score");
+        this.score = 0;
     }
 
     start() {
         setInterval(() => {
             let enemy = EnemyFactory.create();
             enemy.setLeftPosition(this.PickRandomEnemySpawnPoint(enemy));
+            enemy.subscribe(this.setScore.bind(this));
             this.createInCanvas(enemy);
             enemy.moveToBottom(this.canvasHeight);
         }, 1000);
@@ -34,10 +36,9 @@ export class Game {
         this.canvas.append(enemy.element);
     }
 
-    moveEnemy() {
-        let enemy = $(".enemy");
-        let enemyHeight = enemy.height();
-        enemy.animate({ "top": this.canvasHeight - enemyHeight }, 2000);
+    setScore(score){
+        this.score = this.score + score;
+        this.scoreUI.text(this.score);
     }
 
     PickRandomEnemySpawnPoint(enemy) {

@@ -12,6 +12,14 @@ body {
     position: relative;
 }
 
+#score{
+    color: white;
+    font-size: 2rem;
+    position: absolute;
+    left: 50%;
+    top: 2%;
+}
+
 .enemy {
     display: inline-block;
     font-size: 4rem;
