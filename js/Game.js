@@ -1,16 +1,18 @@
-import Enemy from "./Enemy.js";
 import EnemyFactory from "./EnemyFactory.js";
 
 export class Game {
+    
     constructor() {
         this.canvas = $("#canvas");
         this.canvasHeight = this.canvas.height();
         this.canvasWidth = this.canvas.width();
         this.score = null;
     }
+
     start() {
         setInterval(() => {
             let enemy = EnemyFactory.create();
+            enemy.setLeftPosition(this.PickRandomEnemySpawnPoint(enemy));
             this.createInCanvas(enemy);
             enemy.moveToBottom(this.canvasHeight);
         }, 1000);
@@ -26,12 +28,6 @@ export class Game {
         else {
             return 250;
         }
-    }
-
-    createEnemy() {
-        let enemy = new Enemy();
-        enemy.setLeftPosition(this.PickRandomEnemySpawnPoint(enemy));
-        return enemy;
     }
 
     createInCanvas(enemy) {

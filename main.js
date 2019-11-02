@@ -35,7 +35,6 @@ import { Game } from "./js/Game.js";
 
 (function() {
     window.addEventListener("DOMContentLoaded", (event) => {
-        window.enemyCount = 0;
         new Game().start();
     });
 })();
