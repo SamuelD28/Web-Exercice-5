@@ -1,6 +1,6 @@
 import EnemyFactory from "./EnemyFactory.js";
 
-export class Game {
+class Game {
     
     constructor() {
         this.canvas = $("#canvas");
@@ -11,6 +11,7 @@ export class Game {
         this.enemies = [];
         this.scoreUI = $("#score");
         this.score = 0;
+        this.spawnInterval = 1000;
     }
 
     start(){
@@ -20,6 +21,10 @@ export class Game {
     stop(){
         clearInterval(this.gameLoop);
         this.freezeEnemies();
+    }
+    
+    end(){
+        this.stop();
         this.removeFallingEnemies();
     }
 
@@ -54,7 +59,7 @@ export class Game {
             enemy.moveToBottom(this.canvasHeight);
             this.enemies.push(enemy);
 
-        }, 1000);
+        }, this.spawnInterval);
     }
 
     applyScoreStrategy() {
@@ -81,3 +86,7 @@ export class Game {
         return Math.random() * this.canvasWidth;
     }
 }
+
+const Instance = new Game();
+
+export default Instance;

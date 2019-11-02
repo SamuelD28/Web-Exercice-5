@@ -6,7 +6,6 @@
  * 
  * 
  * Todo : 
- * -Spawn aleatoire
  * -Systeme de score
  * -Acceleration de la partie
  * 
@@ -21,9 +20,6 @@
  *      -Domage -200
  *      -Detruire : Double click avec souris
  * 
- * -Decrementer arriver au bas
- * -Destruction fade out
- * -Partie termine. Fade out des objects qui ont pas atteint le sol
  * -Message game over
  * -Bloquer le clic contextuel
  * -Ajuster pour un ecran qui se redimenssione
@@ -31,10 +27,18 @@
  * 
  */
 
-import { Game } from "./js/Game.js";
+import Game from "./js/Game.js";
 
 (function() {
-    window.addEventListener("DOMContentLoaded", (event) => {
-        new Game().start();
+
+    window.addEventListener("DOMContentLoaded", () => {
+        Game.start();
     });
+
+    window.addEventListener('keydown', function(event) {
+        if(event.keyCode == 9) {
+            Game.stop();
+        }
+    });
+
 })();
