@@ -1,7 +1,15 @@
 import Enemy from "./Enemy.js";
 
-export default class Zombie extends Enemy {
+/**
+ * @description Class specifying the properties of a 
+ * zombie enemy
+ * 
+ * @author Samuel Colassin, Samuel Dube
+ */
+class Zombie extends Enemy {
     constructor() {
         super("<div>🧟</div>", "zombie", -10, 20);
     }
 }
+
+export default Zombie;

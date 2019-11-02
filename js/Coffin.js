@@ -1,7 +1,15 @@
 import Enemy from "./Enemy.js";
 
-export default class Coffin extends Enemy {
+/**
+ * @description Class specifying the properties of a 
+ * coffin enemy
+ * 
+ * @author Samuel Colassin, Samuel Dube
+ */
+class Coffin extends Enemy {
     constructor() {
         super("<div>⚰️</div>", "coffin", -200, 100);
     }
 }
+
+export default Coffin;

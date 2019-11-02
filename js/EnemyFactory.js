@@ -1,7 +1,13 @@
 import Zombie from "./Zombie.js";
 import Coffin from "./Coffin.js";
 
-export default class EnemyFactory{
+/**
+ * @description Factory class used to create new enemy
+ * based on their spawn probablity factor.
+ * 
+ * @author Samuel Colassin, Samuel Dube
+ */
+class EnemyFactory{
 
     static create() {
         let rdn = Math.floor(Math.random() * 10) + 1;
@@ -12,3 +18,5 @@ export default class EnemyFactory{
         }
     }
 }
+
+export default EnemyFactory;
