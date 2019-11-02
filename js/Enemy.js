@@ -14,13 +14,14 @@ class Enemy {
      * @param {Integer} damage Damage of the enemy
      * @param {Integer} points Points of the enemy
      */
-    constructor(tag, css, damage, points){
+    constructor(tag, css, damage, points, eventType){
         this.element = $(tag)
             .css({ left: 0 + "px" })
             .addClass("enemy", css);
         this.scoreSubscribers = [];
         this.damage = damage;
         this.points = points;
+        this.eventType = eventType;
     }
 
     /**
@@ -33,16 +34,16 @@ class Enemy {
         this.element.css({ left: left + "px" });
     }
 
-    activateOnClick(){
-        this.element.click(()=>{
+    activateOnEvent(){
+        this.element.on(this.eventType, ()=>{
             this.changeScore(this.points);
             this.freeze(); // We freeze it otherwise we cant remove it
             this.remove();
         });
     }
 
-    deactivateOnClick(){
-        this.element.off("click");
+    deactivateOnClick() {
+        this.element.off(this.eventType);
     }
 
     /**
@@ -52,12 +53,13 @@ class Enemy {
      * @param {Integer} bottom Bottom position to move the enemy to
      */
     moveToBottom(bottom) {
-        this.activateOnClick();
+        this.activateOnEvent();
         this.element.animate({ 
             "top": bottom - this.element.outerHeight() 
         }, 
-        4000,
+        6000,
         () =>{
+            this.deactivateOnClick();
             this.changeScore(this.damage);
         });
     }
@@ -65,15 +67,15 @@ class Enemy {
     /**
      * @description Method that freeze the enemy in their current position
      */
-    freeze(){
+    freeze() {
         this.deactivateOnClick();
         this.element.stop();
     }
 
     /**
-     * Method that remove the enemy
+     * @description Method that remove the enemy
      */
-    remove(){
+    remove() {
         this.element.fadeOut(function(){
             $(this).remove();
         });
@@ -86,7 +88,7 @@ class Enemy {
      * 
      * @param {Callback} cb Subscribers callback method.
      */
-    subscribe(cb){
+    subscribe(cb) {
         this.scoreSubscribers.push(cb);
     }
 
@@ -96,7 +98,7 @@ class Enemy {
      * 
      * @param {Integer} score Score point to pass to the subscriber 
      */
-    changeScore(score){
+    changeScore(score) {
         this.scoreSubscribers.forEach(cb => {
             cb(score);
         });

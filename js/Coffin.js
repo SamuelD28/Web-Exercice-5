@@ -8,7 +8,7 @@ import Enemy from "./Enemy.js";
  */
 class Coffin extends Enemy {
     constructor() {
-        super("<div>⚰️</div>", "coffin", -200, 100);
+        super("<div>⚰️</div>", "coffin", -200, 100, "dblclick");
     }
 }
 

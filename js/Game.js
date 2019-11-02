@@ -17,18 +17,21 @@ class Game {
         
         // Could become a strategy pattern
         this.scoreUI = $("#score");
-        this.score = 100;
+        this.score = 0;
+        this.maxScore = null;
 
         this.enemies = [];
         this.gameLoop = null;
         this.spawnInterval = 1000;
+        this.isGameOver = false;
     }
 
     /**
      * @description Method that start the game by creating 
      * the main game loop
      */
-    start(){
+    start() {
+        this.makeWeaponfollowCursor();
         this.gameLoop = this.createGameLoop();
     }
 
@@ -38,11 +41,11 @@ class Game {
      */
     stop(){
         this.freezeEnemies();
-        clearInterval(this.gameLoop);
+        clearTimeout(this.gameLoop);
         this.gameLoop = null;
     }
     
-    resume(){
+    resume() {
 
         this.unfreezeEnemies();
         this.start();
@@ -52,10 +55,11 @@ class Game {
      * @description Method that end the current game by stopping 
      * it and removing all falling enemeies
      */
-    end(){
-
+    end() {
         this.stop();
         this.removeFallingEnemies();
+        this.showGameOver();
+        this.isGameOver = true;
     }
 
     /**
@@ -100,7 +104,7 @@ class Game {
      */
     createGameLoop() {
 
-        return setInterval(() => {
+        return setTimeout(() => {
 
             let enemy = EnemyFactory.create();
             this.enemies.push(enemy);
@@ -110,8 +114,25 @@ class Game {
             enemy.setLeftPosition(this.PickRandomEnemySpawnPoint(enemy));
             enemy.subscribe(this.setScore.bind(this));
             enemy.moveToBottom(this.canvasHeight);
+            this.changeGameSpeed();
+            console.log(this.spawnInterval)
+            if (!this.isGameOver) {
+                this.createGameLoop();
+            } else {
+                this.end();
+            }
 
         }, this.spawnInterval);
+    }
+
+    changeGameSpeed() {
+        if (this.maxScore > 100 && this.maxScore < 300) {
+            this.spawnInterval = 500;
+        } else if (this.maxScore >= 300 && this.maxScore < 600) {
+            this.spawnInterval = 250;
+        } else if (this.maxScore >= 600) {
+            this.spawnInterval = 125;
+        } 
     }
 
     /**
@@ -119,13 +140,14 @@ class Game {
      */
     applyScoreStrategy() {
 
-        if (this.score < 0) {
+        if (this.score <= 0) {
+            this.isGameOver = true;
             this.end();
         }
     }
 
     /**
-     * @description Method that instantiate an enemy in the canvad
+     * @description Method that instantiate an enemy in the canvas
      * 
      * @param {Enemy} enemy Enemy to spawn
      */
@@ -142,6 +164,7 @@ class Game {
     setScore(score){
 
         this.score = this.score + score;
+        this.increaseMaxScore();
         this.scoreUI.text(this.score);
         this.applyScoreStrategy();
     }
@@ -155,7 +178,7 @@ class Game {
      * @returns Return the random left position
      */
     PickRandomEnemySpawnPoint(enemy) {
-        console.log(enemy.element.outerWidth());
+        //console.log(enemy.element.outerWidth());
         return Math.max(this.PickRandomLeftPositionInCanvas() - enemy.element.outerWidth(), 0);
     }
 
@@ -168,6 +191,38 @@ class Game {
     PickRandomLeftPositionInCanvas() {
         
         return Math.random() * this.canvasWidth;
+    }
+
+    /**
+     * @description Show a message on screen when the game is over 
+     */
+    showGameOver() {
+        $("<div>Partie terminée !</div>")
+        .appendTo("#canvas")
+        .addClass("gameover");
+
+        $(".header").animate({top: "0.1rem"}, {duration: 2000});
+    }
+
+    /**
+     * @description Makes that the weapon follow the cursor
+     */
+    makeWeaponfollowCursor() {
+        $(document).mousemove(function(e) {
+            $("#mouse").css({
+              top: e.pageY, 
+              left: e.pageX 
+            });
+        });
+    }
+
+    /**
+     * @description Increases the maximum score reached by the player 
+     */
+    increaseMaxScore() {
+        if (this.maxScore < this.score) {
+            this.maxScore = this.score;
+        }
     }
 }
 

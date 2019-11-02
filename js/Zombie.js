@@ -8,7 +8,7 @@ import Enemy from "./Enemy.js";
  */
 class Zombie extends Enemy {
     constructor() {
-        super("<div>🧟</div>", "zombie", -10, 20);
+        super("<div>🧟</div>", "zombie", -10, 20, "mouseenter");
     }
 }
 

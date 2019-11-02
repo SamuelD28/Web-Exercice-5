@@ -10,23 +10,53 @@ body {
     height: 100%;
     background: black;
     position: relative;
+    color: white;
+    font-family: 'Astloch';
+    font-weight:bolder;
 }
 
-#score{
-    color: white;
-    font-size: 2rem;
+.gameover {
+    background-color: #820100;
+    width: 20%;
+    height: 15%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: absolute;
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    font-size: 2.5rem;
+}
+
+.header {
+    position: absolute;
+    top: -7.2rem;
+}
+
+#mouse {
+    font-size: 5rem;
+    position: absolute;
+    top: 50%;
     left: 50%;
-    top: 2%;
+    transform: translate(30%);
+}
+
+#score {
+    font-size: 2.5rem;
+    position: absolute;
+    left: 2%;
+    top: 3%;
 }
 
 .enemy {
     cursor: pointer;
     display: inline-block;
     font-size: 4rem;
-    padding: 1rem;
     top: -4em;
     left: 0;
-    background: white;
     position: absolute;
 }
+
