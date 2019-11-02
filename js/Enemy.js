@@ -18,6 +18,11 @@ class Enemy {
         this.element = $(tag)
             .css({ left: 0 + "px" })
             .addClass("enemy", css);
+        this.element.click(()=>{
+            console.log("clicking");
+            this.changeScore(points);
+            this.freeze();
+        });
         this.scoreSubscribers = [];
         this.damage = damage;
         this.points = points;
@@ -43,7 +48,7 @@ class Enemy {
         this.element.animate({ 
             "top": bottom - this.element.height() 
         }, 
-        2000,
+        4000,
         () =>{
             this.changeScore(this.damage);
         });

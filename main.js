@@ -4,7 +4,6 @@
  * dans le html dapres moi.Les methodes retournent surment zero parce lelement est pas
  * encore dessiner dans le DOM
  * 
- * 
  * Todo : 
  * -Systeme de score
  * -Acceleration de la partie
@@ -36,8 +35,13 @@ import Game from "./js/Game.js";
     });
 
     window.addEventListener('keydown', function(event) {
-        if(event.keyCode == 9) {
-            Game.stop();
+        if(event.keyCode == 81) {
+
+            if(Game.gameLoop){
+                Game.stop();
+            }else{
+                Game.resume();
+            }
         }
     });
 

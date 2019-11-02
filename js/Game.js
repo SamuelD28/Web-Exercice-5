@@ -16,9 +16,11 @@ class Game {
         this.canvasWidth = this.canvas.width();
         
         // Could become a strategy pattern
-        this.enemies = [];
         this.scoreUI = $("#score");
-        this.score = 0;
+        this.score = 100;
+
+        this.enemies = [];
+        this.gameLoop = null;
         this.spawnInterval = 1000;
     }
 
@@ -27,7 +29,6 @@ class Game {
      * the main game loop
      */
     start(){
-
         this.gameLoop = this.createGameLoop();
     }
 
@@ -36,11 +37,17 @@ class Game {
      * freezing all enemies
      */
     stop(){
-
-        clearInterval(this.gameLoop);
         this.freezeEnemies();
+        clearInterval(this.gameLoop);
+        this.gameLoop = null;
     }
     
+    resume(){
+
+        this.unfreezeEnemies();
+        this.start();
+    }
+
     /**
      * @description Method that end the current game by stopping 
      * it and removing all falling enemeies
@@ -111,7 +118,7 @@ class Game {
     applyScoreStrategy() {
 
         if (this.score < 0) {
-            this.stop();
+            this.end();
         }
     }
 
