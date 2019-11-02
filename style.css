@@ -21,6 +21,7 @@ body {
 }
 
 .enemy {
+    cursor: pointer;
     display: inline-block;
     font-size: 4rem;
     padding: 1rem;

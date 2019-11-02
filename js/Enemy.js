@@ -18,11 +18,6 @@ class Enemy {
         this.element = $(tag)
             .css({ left: 0 + "px" })
             .addClass("enemy", css);
-        this.element.click(()=>{
-            console.log("clicking");
-            this.changeScore(points);
-            this.freeze();
-        });
         this.scoreSubscribers = [];
         this.damage = damage;
         this.points = points;
@@ -38,6 +33,18 @@ class Enemy {
         this.element.css({ left: left + "px" });
     }
 
+    activateOnClick(){
+        this.element.click(()=>{
+            this.changeScore(this.points);
+            this.freeze(); // We freeze it otherwise we cant remove it
+            this.remove();
+        });
+    }
+
+    deactivateOnClick(){
+        this.element.off("click");
+    }
+
     /**
      * @description Method that move the current enemy to the specified
      * bottom position.
@@ -45,6 +52,7 @@ class Enemy {
      * @param {Integer} bottom Bottom position to move the enemy to
      */
     moveToBottom(bottom) {
+        this.activateOnClick();
         this.element.animate({ 
             "top": bottom - this.element.height() 
         }, 
@@ -58,6 +66,7 @@ class Enemy {
      * @description Method that freeze the enemy in their current position
      */
     freeze(){
+        this.deactivateOnClick();
         this.element.stop();
     }
 
@@ -65,7 +74,9 @@ class Enemy {
      * Method that remove the enemy
      */
     remove(){
-        this.element.fadeOut();
+        this.element.fadeOut(function(){
+            $(this).remove();
+        });
     }
 
     /**
