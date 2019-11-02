@@ -6,12 +6,23 @@ export class Game {
         this.canvas = $("#canvas");
         this.canvasHeight = this.canvas.height();
         this.canvasWidth = this.canvas.width();
+        
+        // Could become a strategy pattern
         this.scoreUI = $("#score");
-        this.score = 0;
+        this.score = 100;
     }
 
-    start() {
-        setInterval(() => {
+    start(){
+        this.gameLoop = this.createGameLoop();
+    }
+
+    stop(){
+        clearInterval(this.gameLoop);
+    }
+
+    createGameLoop() {
+        return setInterval(() => {
+            this.checkScore();
             let enemy = EnemyFactory.create();
             enemy.setLeftPosition(this.PickRandomEnemySpawnPoint(enemy));
             enemy.subscribe(this.setScore.bind(this));
@@ -20,15 +31,9 @@ export class Game {
         }, 1000);
     }
 
-    setIntervalTime() {
-        if (this.score < 200) {
-            return 1000;
-        }
-        else if (this.score < 500) {
-            return 500;
-        }
-        else {
-            return 250;
+    checkScore() {
+        if (this.score < 0) {
+            this.stop();
         }
     }
 
