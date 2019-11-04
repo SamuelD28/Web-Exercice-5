@@ -142,7 +142,7 @@ class Game {
 
         if (this.score <= 0) {
             this.isGameOver = true;
-            this.end();
+            //this.end();
         }
     }
 
