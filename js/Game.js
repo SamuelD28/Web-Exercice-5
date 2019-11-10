@@ -134,6 +134,10 @@ class Game {
     this.canvasWidth = this.canvas.width();
   }
 
+  /**
+   * @description Increase the spawn interval of enemy base on
+   * the maximum score the player has reached
+   */
   changeGameSpeed() {
     if (this.maxScore > 100 && this.maxScore < 300) {
       this.spawnInterval = 500;
